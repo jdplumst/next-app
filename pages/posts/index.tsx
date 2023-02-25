@@ -1,7 +1,7 @@
 import { InferGetStaticPropsType } from "next";
 
 interface Post {
-  id: number;
+  id: string;
   title: string;
   content: string;
   first_name: string;
