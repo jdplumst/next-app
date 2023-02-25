@@ -9,7 +9,7 @@ interface Post {
 }
 
 export async function getStaticProps() {
-  const response = await fetch(`${process.env.BASE_URL}/api/hello`);
+  const response = await fetch(`${process.env.BASE_URL}/api/post`);
   const posts: Post[] = await response.json();
   return { props: { posts } };
 }
