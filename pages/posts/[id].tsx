@@ -1,5 +1,4 @@
-import { GetStaticPaths, InferGetStaticPropsType } from "next";
-import { useRouter } from "next/router";
+import { InferGetStaticPropsType } from "next";
 
 interface Post {
   id: string;
@@ -10,7 +9,7 @@ interface Post {
 }
 
 export async function getStaticPaths() {
-  const response = await fetch(`${process.env.BASE_URL}/api/post`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/post`);
   const posts: Post[] = await response.json();
   const paths = posts.map((post) => {
     return { params: { id: post.id } };
@@ -23,7 +22,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context: any) {
   const response = await fetch(
-    `${process.env.BASE_URL}/api/post/${context.params.id}`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${context.params.id}`
   );
   const post: Post = await response.json();
   return { props: { post } };

@@ -7,10 +7,20 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { id }: any = req.query;
-  try {
-    const post = await prisma.post.findFirstOrThrow({ where: { id: id } });
-    return res.status(200).json(post);
-  } catch (err) {
-    return res.status(400).json({ error: err });
+  switch (req.method) {
+    case "GET":
+      try {
+        const post = await prisma.post.findFirstOrThrow({ where: { id: id } });
+        return res.status(200).json(post);
+      } catch (err) {
+        return res.status(400).json({ error: err });
+      }
+    case "DELETE":
+      try {
+        const post = await prisma.post.delete({ where: { id: id } });
+        return res.status(200).json(post);
+      } catch (err) {
+        return res.status(400).json({ error: err });
+      }
   }
 }
