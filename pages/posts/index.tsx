@@ -1,5 +1,6 @@
 import { InferGetStaticPropsType } from "next";
 import Link from "next/link";
+import { useState } from "react";
 
 interface Post {
   id: string;
@@ -18,6 +19,8 @@ export async function getStaticProps() {
 export default function Posts({
   posts
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  // const [statePosts, setStatePosts] = useState(posts);
+
   const deletePost = async (id: string) => {
     console.log(`${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${id}`);
     const response = await fetch(
@@ -31,7 +34,7 @@ export default function Posts({
   };
 
   return (
-    <div>
+    <div className="flex flex-col justify-center">
       {posts.map((post) => (
         <div key={post.id} className="flex justify-center my-5">
           <Link href={`posts/${post.id}`} className="w-1/2">
@@ -47,6 +50,9 @@ export default function Posts({
           </button>
         </div>
       ))}
+      <Link href={"posts/new"} className="w-fit mx-auto">
+        <button className="bg-teal-500 p-4">Create New Post</button>
+      </Link>
     </div>
   );
 }
