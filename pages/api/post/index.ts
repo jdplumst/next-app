@@ -1,7 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import prisma from "@/prisma/script";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { ObjectId } from "bson";
 
 export default async function handler(
   req: NextApiRequest,
@@ -16,14 +15,14 @@ export default async function handler(
         return res.status(400).json({ error: err });
       }
     case "POST":
-      const { title, content, firstName, lastName } = req.body;
+      const { title, content, first_name, last_name } = req.body;
       try {
         const post = await prisma.post.create({
           data: {
             title: title,
             content: content,
-            first_name: firstName,
-            last_name: lastName
+            first_name: first_name,
+            last_name: last_name
           }
         });
         return res.status(200).json(post);

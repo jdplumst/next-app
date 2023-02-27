@@ -22,6 +22,26 @@ export default function NewPost() {
     setLastName(e.target.value);
   };
 
+  const createPost = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/post`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          title: title,
+          content: content,
+          first_name: firstName,
+          last_name: lastName
+        })
+      }
+    );
+    const data = await response.json();
+    return data;
+  };
+
   return (
     <div className="p-4 flex flex-col">
       <div className="my-5">
@@ -52,7 +72,9 @@ export default function NewPost() {
           value={lastName}
           className="border-2 border-black ml-4"></input>
       </div>
-      <button className="bg-teal-500 w-fit p-4">Add New Post</button>
+      <button onClick={createPost} className="bg-teal-500 w-fit p-4">
+        Add New Post
+      </button>
     </div>
   );
 }
