@@ -22,5 +22,21 @@ export default async function handler(
       } catch (err) {
         return res.status(400).json({ error: err });
       }
+    case "PATCH":
+      const { title, content, first_name, last_name } = req.body;
+      try {
+        const post = await prisma.post.update({
+          where: { id: id },
+          data: {
+            title: title,
+            content: content,
+            first_name: first_name,
+            last_name: last_name
+          }
+        });
+        return res.status(200).json(post);
+      } catch (err) {
+        return res.status(400).json({ error: err });
+      }
   }
 }
