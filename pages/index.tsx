@@ -1,5 +1,5 @@
+import Navbar from "@/components/Navbar";
 import Head from "next/head";
-import Link from "next/link";
 
 export default function Home() {
   return (
@@ -10,15 +10,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
-        <h1 className="text-red-500 text-center text-7xl mb-10">Home Page</h1>
-        <nav className="flex justify-end mb-10">
-          <Link href="/posts">
-            <div className="mr-10">Posts</div>
-          </Link>
-          <div className="mr-10">Users</div>
-        </nav>
-      </div>
+      <Navbar />
+      <h1 className="text-center mt-10 text-7xl">This is the Home Page!</h1>
     </>
   );
 }

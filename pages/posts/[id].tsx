@@ -1,3 +1,4 @@
+import Navbar from "@/components/Navbar";
 import { InferGetStaticPropsType } from "next";
 import { useState } from "react";
 
@@ -74,51 +75,54 @@ export default function IndividualPost({
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-3xl font-bold mb-4">This is a post!</h1>
-      <div className="flex flex-col gap-4">
-        <div className="flex gap-4">
-          <label className="text-right w-20 inline-block">ID: </label>
-          <p>{post.id}</p>
+    <>
+      <Navbar />
+      <div className="p-4">
+        <h1 className="text-3xl font-bold mb-4">This is a post!</h1>
+        <div className="flex flex-col gap-4">
+          <div className="flex gap-4">
+            <label className="text-right w-20 inline-block">ID: </label>
+            <p>{post.id}</p>
+          </div>
+          <div className="flex gap-4">
+            <label className="text-right w-20 inline-block">Title: </label>
+            <input
+              onInput={handleTitle}
+              value={title}
+              className="w-1/2 border-2 border-black"
+            />
+          </div>
+          <div className="flex gap-4">
+            <label className="text-right w-20 inline-block">Content: </label>
+            <input
+              onInput={handleContent}
+              value={content}
+              className="w-1/2 border-2 border-black"
+            />
+          </div>
+          <div className="flex gap-4">
+            <label className="text-right w-20 inline-block">First Name: </label>
+            <input
+              onInput={handleFirstName}
+              value={firstName}
+              className="w-1/2 border-2 border-black"
+            />
+          </div>
+          <div className="flex gap-4">
+            <label className="text-right w-20 inline-block">Last Name: </label>
+            <input
+              onInput={handleLastName}
+              value={lastName}
+              className="w-1/2 border-2 border-black"
+            />
+          </div>
         </div>
-        <div className="flex gap-4">
-          <label className="text-right w-20 inline-block">Title: </label>
-          <input
-            onInput={handleTitle}
-            value={title}
-            className="w-1/2 border-2 border-black"
-          />
-        </div>
-        <div className="flex gap-4">
-          <label className="text-right w-20 inline-block">Content: </label>
-          <input
-            onInput={handleContent}
-            value={content}
-            className="w-1/2 border-2 border-black"
-          />
-        </div>
-        <div className="flex gap-4">
-          <label className="text-right w-20 inline-block">First Name: </label>
-          <input
-            onInput={handleFirstName}
-            value={firstName}
-            className="w-1/2 border-2 border-black"
-          />
-        </div>
-        <div className="flex gap-4">
-          <label className="text-right w-20 inline-block">Last Name: </label>
-          <input
-            onInput={handleLastName}
-            value={lastName}
-            className="w-1/2 border-2 border-black"
-          />
+        <div className="flex justify-center mt-10">
+          <button onClick={updatePost} className="bg-purple-500 w-fit p-4">
+            Update
+          </button>
         </div>
       </div>
-      <div className="flex justify-center mt-10">
-        <button onClick={updatePost} className="bg-purple-500 w-fit p-4">
-          Update
-        </button>
-      </div>
-    </div>
+    </>
   );
 }
