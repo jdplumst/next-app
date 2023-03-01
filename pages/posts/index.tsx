@@ -19,10 +19,9 @@ export async function getStaticProps() {
 export default function Posts({
   posts
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  // const [statePosts, setStatePosts] = useState(posts);
+  const [statePosts, setStatePosts] = useState(posts);
 
   const deletePost = async (id: string) => {
-    console.log(`${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${id}`);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${id}`,
       {
@@ -30,12 +29,15 @@ export default function Posts({
       }
     );
     const data = await response.json();
+    setStatePosts((prevStatePosts) =>
+      prevStatePosts.filter((post) => post.id !== data.id)
+    );
     return data;
   };
 
   return (
     <div className="flex flex-col justify-center">
-      {posts.map((post) => (
+      {statePosts.map((post) => (
         <div key={post.id} className="flex justify-center my-5">
           <Link href={`posts/${post.id}`} className="w-1/2">
             <div className="bg-purple-500 my-5 text-center">
