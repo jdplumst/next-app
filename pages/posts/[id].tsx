@@ -32,14 +32,42 @@ export default function IndividualPost({
   post
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <div>
-      <h1>This is a post!</h1>
-      <p>{post.id}</p>
-      <p>{post.title}</p>
-      <p>{post.content}</p>
-      <p>
-        {post.first_name} {post.last_name}
-      </p>
+    <div className="p-4">
+      <h1 className="text-3xl font-bold mb-4">This is a post!</h1>
+      <div className="flex flex-col gap-4">
+        <div className="flex gap-4">
+          <label className="text-right w-20 inline-block">ID: </label>
+          <p>{post.id}</p>
+        </div>
+        <div className="flex gap-4">
+          <label className="text-right w-20 inline-block">Title: </label>
+          <input
+            defaultValue={post.title}
+            className="w-1/2 border-2 border-black"
+          />
+        </div>
+        <div className="flex gap-4">
+          <label className="text-right w-20 inline-block">Content: </label>
+          <input
+            defaultValue={post.content}
+            className="w-1/2 border-2 border-black"
+          />
+        </div>
+        <div className="flex gap-4">
+          <label className="text-right w-20 inline-block">First Name: </label>
+          <input
+            defaultValue={post.first_name}
+            className="w-1/2 border-2 border-black"
+          />
+        </div>
+        <div className="flex gap-4">
+          <label className="text-right w-20 inline-block">Last Name: </label>
+          <input
+            defaultValue={post.last_name}
+            className="w-1/2 border-2 border-black"
+          />
+        </div>
+      </div>
     </div>
   );
 }
