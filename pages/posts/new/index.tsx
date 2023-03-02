@@ -24,21 +24,18 @@ export default function NewPost() {
   };
 
   const createPost = async () => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/post`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          title: title,
-          content: content,
-          first_name: firstName,
-          last_name: lastName
-        })
-      }
-    );
+    const response = await fetch(`/api/post`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title: title,
+        content: content,
+        first_name: firstName,
+        last_name: lastName
+      })
+    });
     const data = await response.json();
     return data;
   };

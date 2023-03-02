@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import { InferGetStaticPropsType } from "next";
 import { useState } from "react";
+import prisma from "@/prisma/script";
 
 interface Post {
   id: string;
@@ -11,23 +12,29 @@ interface Post {
 }
 
 export async function getStaticPaths() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/post`);
-  const posts: Post[] = await response.json();
-  const paths = posts.map((post) => {
-    return { params: { id: post.id } };
-  });
-  return {
-    paths,
-    fallback: "blocking"
-  };
+  try {
+    const posts: Post[] = await prisma.post.findMany();
+    const paths = posts.map((post) => {
+      return { params: { id: post.id } };
+    });
+    return {
+      paths,
+      fallback: "blocking"
+    };
+  } catch (err) {
+    throw err;
+  }
 }
 
 export async function getStaticProps(context: any) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${context.params.id}`
-  );
-  const post: Post = await response.json();
-  return { props: { post } };
+  try {
+    const post = await prisma.post.findFirstOrThrow({
+      where: { id: context.params.id }
+    });
+    return { props: { post } };
+  } catch (err) {
+    throw err;
+  }
 }
 
 export default function IndividualPost({
@@ -55,21 +62,18 @@ export default function IndividualPost({
   };
 
   const updatePost = async () => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${post.id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          title: title,
-          content: content,
-          first_name: firstName,
-          last_name: lastName
-        })
-      }
-    );
+    const response = await fetch(`/api/post/${post.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title: title,
+        content: content,
+        first_name: firstName,
+        last_name: lastName
+      })
+    });
     const data = await response.json();
     return data;
   };

@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import { InferGetStaticPropsType } from "next";
 import Link from "next/link";
 import { useState } from "react";
+import prisma from "@/prisma/script";
 
 interface Post {
   id: string;
@@ -12,9 +13,12 @@ interface Post {
 }
 
 export async function getStaticProps() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/post`);
-  const posts: Post[] = await response.json();
-  return { props: { posts } };
+  try {
+    const posts: Post[] = await prisma.post.findMany();
+    return { props: { posts } };
+  } catch (err) {
+    throw err;
+  }
 }
 
 export default function Posts({
@@ -23,12 +27,9 @@ export default function Posts({
   const [statePosts, setStatePosts] = useState(posts);
 
   const deletePost = async (id: string) => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${id}`,
-      {
-        method: "DELETE"
-      }
-    );
+    const response = await fetch(`/api/post/${id}`, {
+      method: "DELETE"
+    });
     const data = await response.json();
     setStatePosts((prevStatePosts) =>
       prevStatePosts.filter((post) => post.id !== data.id)
